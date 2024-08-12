@@ -57,7 +57,12 @@ def execute_sql_file(cursor, file_path, params):
         query = query.format(startDate=params['startdate'], endDate=params['enddate'], period=params['period'])
         
         # Execute the query
-        cursor.execute(query, multi=True)
+        for result in cursor.execute(query, multi=True):
+            if result.with_rows:
+                print(f"Rows produced by query: {result.fetchall()}")
+            else:
+                print(f"Number of rows affected: {result.rowcount}")
+
         print(f"SQL file {file_path} executed successfully.")
     except Error as e:
         print(f"Error executing SQL file {file_path}: {e}")
@@ -150,6 +155,10 @@ def run_pipeline(params):
                 for sql_file in sql_files:
                     execute_sql_file(cursor, sql_file, params)
                     progress_bar.update(1)
+
+                # Commit the transactions
+                connection.commit()
+                print(f"Pipeline completed for database {db}")
 
         except Error as e:
             print(f"Error connecting to database {db}: {e}")
