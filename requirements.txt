@@ -4,3 +4,4 @@ PyMySQL
 requests
 python-dotenv
 tqdm
+mysql-connector-python
