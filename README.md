@@ -59,6 +59,14 @@ DB_TABLE=
 ### 5. Running the Pipeline
 You can run the pipeline from the command line by specifying the required arguments. Replace the startdate, enddate and period with the respective details.
 
+Monthly
+
 ```bash
-python DxCentre-2.py --startdate 2024-01-01 --enddate 2024-01-31 --period 202401
+python3 DxCentre-2.py --startdate 2024-01-01 --enddate 2024-01-31 --period 202401
+```
+
+Quarterly: Ran during quarterly reporting periods i.e Oct - Dec, Jan - Mar, Apr - Jun, Jul - Sep
+
+```bash
+python3 DxCentre-2.py --startdate 2024-01-01 --enddate 2024-01-31 --period 202401 --startqtr 2024-01-01 --endqtr 2024-03-31
 ```

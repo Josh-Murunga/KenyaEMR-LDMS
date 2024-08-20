@@ -37,6 +37,8 @@ def parse_arguments():
     parser.add_argument('--startdate', required=True, help='Start date in the format YYYY-MM-DD')
     parser.add_argument('--enddate', required=True, help='End date in the format YYYY-MM-DD')
     parser.add_argument('--period', required=True, help='Period in the format YYYYMM')
+    parser.add_argument('--startqtr', help='Start of the quarter in the format YYYY-MM-DD')
+    parser.add_argument('--endqtr', help='End of the quarter in the format YYYY-MM-DD')
     return parser.parse_args()
 
 # Function to execute a stored procedure
@@ -54,7 +56,13 @@ def execute_sql_file(cursor, file_path, params):
             query = file.read()
         
         # Replace placeholders with actual values
-        query = query.format(startDate=params['startdate'], endDate=params['enddate'], period=params['period'])
+        query = query.format(
+            startDate=params['startdate'],
+            endDate=params['enddate'],
+            period=params['period'],
+            startQtr=params.get('startqtr', 'null'),
+            endQtr=params.get('endqtr', 'null')
+        )
         
         # Execute the query
         for result in cursor.execute(query, multi=True):
@@ -155,7 +163,7 @@ def run_pipeline(params):
                 for sql_file in sql_files:
                     execute_sql_file(cursor, sql_file, params)
                     progress_bar.update(1)
-
+                    
                 # Commit the transactions
                 connection.commit()
                 print(f"Pipeline completed for database {db}")
@@ -175,5 +183,12 @@ def run_pipeline(params):
 
 if __name__ == "__main__":
     args = parse_arguments()
-    params = {'startdate': args.startdate, 'enddate': args.enddate, 'period': args.period}
+    params = {
+        'startdate': args.startdate,
+        'enddate': args.enddate,
+        'period': args.period,
+        'startqtr': args.startqtr if args.startqtr else 'null',
+        'endqtr': args.endqtr if args.endqtr else 'null'
+    }
+        
     run_pipeline(params)

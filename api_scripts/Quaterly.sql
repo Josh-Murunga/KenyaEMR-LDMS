@@ -1,5 +1,5 @@
-SET @startDate = '{startDate}';
-SET @endDate = '{endDate}';
+SET @startDate = '{startQtr}';
+SET @endDate = '{endQtr}';
 SET @period = '{period}';
 
 -- GP section
