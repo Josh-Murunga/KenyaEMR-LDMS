@@ -17,6 +17,7 @@
 
 CREATE DATABASE IF NOT EXISTS ldwh;
 
+USE ldwh;
 --
 -- Table structure for table `dataset_values`
 --
