@@ -74,7 +74,7 @@ AND hts.visit_date BETWEEN DATE(@startDate) AND DATE(@endDate)
                                 GROUP BY hts.`patient_id` ) t WHERE t.key_population_type IS NOT NULL GROUP BY t.key_population_type
 
 -- PWID Section
-UNION SELECT "LjeanJY6H8N" data_element, IF(t.key_population_type = 'People who inject drugs' AND t.Gender = 'F','UXCXK9rZDyA',
+UNION SELECT "PsFyXsY7aS6" data_element, IF(t.key_population_type = 'People who inject drugs' AND t.Gender = 'F','UXCXK9rZDyA',
 					IF(t.key_population_type = 'People who inject drugs' AND t.Gender = 'M', 'atUgyygz96r',
 					NULL)) category_option, t.`organization_unit`, @period period,
 		COUNT(t.key_population_type) `value` 
