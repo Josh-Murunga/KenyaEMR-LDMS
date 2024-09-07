@@ -130,6 +130,9 @@ def post_data_to_dhis2():
 
 # Main function to run the pipeline
 def run_pipeline(params):
+    query = f'TRUNCATE TABLE {table_name}'
+    df = pd.read_sql(query, engine)
+
     databases = read_databases_from_csv('databases.csv')
     if not databases:
         print("No databases to process.")
