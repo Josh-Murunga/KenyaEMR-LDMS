@@ -4,7 +4,7 @@ import pandas as pd
 import os
 import json
 import requests
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, text
 import argparse
 from tqdm import tqdm  # Import tqdm for progress tracking
 from dotenv import load_dotenv
@@ -130,8 +130,8 @@ def post_data_to_dhis2():
 
 # Main function to run the pipeline
 def run_pipeline(params):
-    query = f'TRUNCATE TABLE {table_name}'
-    df = pd.read_sql(query, engine)
+    with engine.connect() as engine_connection:
+        engine_connection.execute(text(f'TRUNCATE TABLE {table_name}'))
 
     databases = read_databases_from_csv('databases.csv')
     if not databases:
